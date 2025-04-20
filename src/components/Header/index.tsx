@@ -1,7 +1,10 @@
-import React from 'react';
 import './styles.css';
 
-export default ({black}) => {
+type Props = {
+    black?: boolean;
+}
+
+export default ({black}: Props) => {
     return (
         <header className={black ? 'black' : ''}>
             <div className='header--logo'>

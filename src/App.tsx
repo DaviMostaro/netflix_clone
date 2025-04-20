@@ -4,11 +4,12 @@ import Tmdb from './Tmdb';
 import MovieRow from './components/MovieRow';
 import FeaturedMovie from './components/FeaturedMovie';
 import Header from './components/Header';
+import { Category, FeaturedData } from './types';
 
 export default () => {
 
-    const [movieList, setMovieList] = useState([]);
-    const [featuredData, setFeaturedData] = useState(null);
+    const [movieList, setMovieList] = useState<Category[]>([]);
+    const [featuredData, setFeaturedData] = useState<FeaturedData | null>(null);
     const [blackHeader, setBlackHeader] = useState(false);
 
     useEffect(() => {

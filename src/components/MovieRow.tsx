@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './MovieRow.css';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Movie } from '../types';
 
-export default ({ title, items }) => {
+interface MovieRowProps {
+    title: string;
+    items: {
+        results: Movie[];
+    };
+}
+
+const MovieRow: React.FC<MovieRowProps> = ({ title, items }) => {
     const [scrollX, setScrollX] = useState(0);
 
     const handleLeftArrow = () => {
@@ -36,17 +44,19 @@ export default ({ title, items }) => {
             </div>
 
             <div className='movieRow--listarea'>
-
-                <div className='movieRow--list' style={{
-                    marginLeft: scrollX,
-                    width: items.results.length * 150
-                }}>
-                    {items && items.results && items.results.length > 0 ? (
+                <div
+                    className='movieRow--list'
+                    style={{
+                        marginLeft: scrollX,
+                        width: items.results.length * 150,
+                    }}
+                >
+                    {items.results.length > 0 ? (
                         items.results.map((item, key) => (
                             <div className='movieRow--item' key={key}>
                                 <img
                                     src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
-                                    alt={item.original_title}
+                                    alt={item.original_title || item.name}
                                 />
                             </div>
                         ))
@@ -54,9 +64,9 @@ export default ({ title, items }) => {
                         <p>Nenhum filme encontrado.</p>
                     )}
                 </div>
-
-                
             </div>
         </div>
     );
 };
+
+export default MovieRow;

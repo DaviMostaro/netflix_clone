@@ -1,15 +1,17 @@
+import { Category, FeaturedData } from "./types";
+
 const API_KEY = '365045a5e151189355c4949a027b8a58';
 const API_URL = 'https://api.themoviedb.org/3';
 
-const basicFetch = async (endpoint) => {
+const basicFetch = async (endpoint: string) => {
     const req = await fetch(`${API_URL}${endpoint}`);
     const json = await req.json();
     console.log(endpoint, json);
     return json;
-}
+};
 
 export default {
-    getHomeList: async () => {
+    getHomeList: async (): Promise<Category[]> => {
         return [
             {
                 slug: 'originals',
@@ -54,11 +56,11 @@ export default {
         ];
     },
 
-    getMovieInfo: async (movieId, type) => {
-        let info = {};
+    getMovieInfo: async (movieId: number, type: string): Promise<FeaturedData> => {
+        let info = {} as FeaturedData;
 
         if (movieId) {
-            switch(type) {
+            switch (type) {
                 case 'movie':
                     info = await basicFetch(`/movie/${movieId}?language=pt-BR&api_key=${API_KEY}`);
                     break;
@@ -66,11 +68,11 @@ export default {
                     info = await basicFetch(`/tv/${movieId}?language=pt-BR&api_key=${API_KEY}`);
                     break;
                 default:
-                    info = null;
+                    info = {} as FeaturedData;
                     break;
             }
         }
 
         return info;
     }
-}
+};
